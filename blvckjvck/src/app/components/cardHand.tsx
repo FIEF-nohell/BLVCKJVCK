@@ -3,7 +3,7 @@ import React from 'react';
 export interface CardData {
     suit: string;
     text: string;
-    value: string;
+    value: number;
     bgColor: string;
     revealed: boolean;
 }
@@ -21,7 +21,7 @@ const Card: React.FC<CardData> = ({ suit, text, bgColor, revealed }) => (
                 <span className="text-[3rem] font-bold ml-1">{suit}</span>
             </div >
             :
-            <div className={`relative w-40 h-56 bg-yvllow rounded-lg flex flex-col justify-between p-2 m-1`}>
+            <div className={`relative w-40 h-56 bg-yvllow rounded-2xl flex flex-col justify-between p-2 m-1`}>
 
             </div >}
     </>
