@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface CardData {
+export interface CardData {
     suit: string;
+    text: string;
     value: string;
     bgColor: string;
-    textColor: string;
     revealed: boolean;
 }
 
@@ -13,11 +13,11 @@ interface cardHandProps {
 }
 
 // Card component with props typed
-const Card: React.FC<CardData> = ({ suit, value, bgColor, textColor, revealed }) => (
+const Card: React.FC<CardData> = ({ suit, text, bgColor, revealed }) => (
     <>    {
         revealed ?
-            <div className={`relative w-40 h-56 ${bgColor} ${textColor} rounded-2xl flex flex-col justify-between p-2 m-1`}>
-                <span className="text-[2.5rem] font-bold ml-1">{value}</span>
+            <div className={`relative w-40 h-56 ${bgColor} text-white rounded-2xl flex flex-col justify-between p-2 m-1`}>
+                <span className="text-[2.5rem] font-bold ml-1">{text}</span>
                 <span className="text-[3rem] font-bold ml-1">{suit}</span>
             </div >
             :
