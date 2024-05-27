@@ -19,12 +19,11 @@ export default function Home() {
 
   // Game
   const [gameStep, setGameStep] = useState(0);
-  // 0: Bidding and starting the game
 
   useEffect(() => {
     updateCounters()
     if (gameStep == 2) {
-      if (shouldDealerDraw(dealerHand)) addCardToDealer(true)
+      if (shouldDealerDraw(dealerHand, playerHand)) addCardToDealer(true)
       else setGameStep(3)
     }
   }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep]);
@@ -43,11 +42,13 @@ export default function Home() {
     let sum = 0;
     let aceCount = 0;
     hand.forEach(card => {
-      if (card.text === 'A') {
-        aceCount += 1;
-        sum += 11;
-      } else {
-        sum += card.value;
+      if (card.revealed != false) {
+        if (card.text === 'A') {
+          aceCount += 1;
+          sum += 11;
+        } else {
+          sum += card.value;
+        }
       }
     });
     while (sum > 21 && aceCount > 0) {
@@ -85,16 +86,18 @@ export default function Home() {
     updateCounters()
   }
 
-  const shouldDealerDraw = (dealerHand: CardData[]): boolean => {
+  const shouldDealerDraw = (dealerHand: CardData[], playerHand: CardData[]): boolean => {
     const dealerSum = calculateHandSum(dealerHand);
+    const playerSum = calculateHandSum(playerHand);
+
     if (dealerSum < 17) {
       return true;
     }
     if (dealerSum === 17) {
-      return Math.random() < 0.2;
+      return Math.random() < 0.05;
     }
-    if (dealerSum > 17 && dealerSum < 21) {
-      return Math.random() < 0.1;
+    if (dealerSum > 17 && dealerSum < 21 && dealerSum < playerSum) {
+      return Math.random() < 0.02;
     }
     return false;
   };
@@ -235,7 +238,7 @@ export default function Home() {
             </div>
             {/* player actions */}
             <div className="w-[20%] h-full flex items-center justify-center text-xl">
-              <Actions playerHandCount={playerHandCount} hit={hit} stand={stand}></Actions>
+              <Actions playerHandCount={playerHandCount} dealerHandCount={dealerHandCount} hit={hit} stand={stand} gameStep={gameStep}></Actions>
             </div>
           </div>
         </div>
