@@ -19,6 +19,7 @@ const config: Config = {
         'svcond': '#c6adc7',
         'rvd': '#f15a55',
         'yvllow': '#ffd64f',
+        'whvte': '#ffffff',
       }
     },
   },
