@@ -128,6 +128,10 @@ export default function Home() {
     setWins(0);
     setLosses(0);
     setGameStep(0)
+    setShowResult(false)
+    setDealerHand([])
+    setPlayerHand([])
+    updateCounters()
     setHiddenTick(Math.random() * 100 * Math.random() * 100);
   };
 
