@@ -24,11 +24,11 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "${{ github.workspace }}/blvckjvck/yarn.lock" ]; then
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_ENV
             echo "command=install" >> $GITHUB_ENV
             echo "runner=yarn" >> $GITHUB_ENV
-          elif [ -f "${{ github.workspace }}/blvckjvck/package-lock.json" ]; then
+          elif [ -f "${{ github.workspace }}/package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_ENV
             echo "command=ci" >> $GITHUB_ENV
             echo "runner=npx --no-install" >> $GITHUB_ENV
@@ -52,21 +52,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            blvckjvck/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('blvckjvck/package-lock.json', 'blvckjvck/yarn.lock') }}-${{ hashFiles('blvckjvck/src/**/*.js', 'blvckjvck/src/**/*.jsx', 'blvckjvck/src/**/*.ts', 'blvckjvck/src/**/*.tsx') }}
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json', 'yarn.lock') }}-${{ hashFiles('src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('blvckjvck/package-lock.json', 'blvckjvck/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json', 'yarn.lock') }}-
 
       - name: Install dependencies
-        run: cd blvckjvck && ${{ env.runner }} ${{ env.command }}
+        run: ${{ env.runner }} ${{ env.command }}
 
       - name: Build with Next.js
-        run: cd blvckjvck && ${{ env.runner }} next build
+        run: ${{ env.runner }} next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: blvckjvck/out
+          path: out
 
   deploy:
     environment:
