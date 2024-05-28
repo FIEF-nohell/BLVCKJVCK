@@ -15,11 +15,10 @@ const config: Config = {
       },
       colors: {
         'tvxt': '#c9d0d1',
-        'blvck': '#404041',
-        'svcond': '#c6adc7',
-        'rvd': '#f15a55',
-        'yvllow': '#ffd64f',
-        'whvte': '#ffffff',
+        'blvck': '#0d0d0d',
+        'rvd': '#691916',
+        'rvd-bright': '#b52b26',
+        'yvllow': '#65551f',
       }
     },
   },

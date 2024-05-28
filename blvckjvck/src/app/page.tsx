@@ -6,7 +6,7 @@ import CardHand, { CardData } from "./components/cardHand";
 
 export default function Home() {
   // Stats
-  const [bet, setBet] = useState(0);
+  const [bet, setBet] = useState(50);
   const [total, setTotal] = useState(500);
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -25,6 +25,7 @@ export default function Home() {
     updateCounters()
     if (gameStep == 1) {
       if (playerHandCount >= 21) {
+        //DEBUG
         revealDealerCard()
         setGameStep(2)
       }
@@ -35,6 +36,7 @@ export default function Home() {
     }
     if (gameStep == 3) {
       checkForWin()
+      //DEBUG
     }
   }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep, hiddenTick]);
 
@@ -118,7 +120,6 @@ export default function Home() {
     ph.push(getRandomCard(visible))
     setPlayerHand(ph)
     updateCounters()
-    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   }
 
   const addCardToDealer = (visible: boolean) => {
@@ -207,7 +208,7 @@ export default function Home() {
   const hit = () => {
     switch (gameStep) {
       case 0:
-        if (bet >= 0) {
+        if (bet > 0) {
           addCardToDealer(false)
           addCardToPlayer(true)
           addCardToDealer(true)
@@ -236,11 +237,11 @@ export default function Home() {
 
   return (
     <main className="h-screen flex items-center justify-center bg-blvck text-tvxt select-none">
-      <div className="bg-[#ffffff] rounded-[3rem] shadow-lg w-[80%] h-[85%] m-0 flex flex-col">
+      <div className="bg-blvck w-[80%] h-[85%] m-0 flex flex-col">
 
         {/* title line */}
         <div className="w-full h-[10%] rounded-t-[3rem] flex items-center justify-center">
-          <p className="font-bold text-[2.5rem] text-center text-svcond" onClick={resetGame}>BLVCKJVCK</p>
+          <p className="font-bold text-[2.5rem] text-center text-tvxt" onClick={resetGame}>BLVCKJVCK</p>
         </div>
 
         {/* upper half of the desk */}
@@ -249,12 +250,13 @@ export default function Home() {
             {/* current bet */}
             <div className="w-[20%] h-full flex items-center justify-center text-xl">
               <div>
-                <p className="font-semibold">Bet: <span className="text-svcond font-bold">${bet}</span></p>
+                <p className="font-semibold">Bet: <span className="text-tvxt font-bold">${bet}</span></p>
               </div>
             </div>
             {/* dealers hand */}
-            <div className="w-[60%] h-full mx-2">
+            <div className="relative w-[60%] h-full mx-2 bg-emerald-950/80 rounded-[3rem] overflow-hidden">
               <CardHand cards={dealerHand} />
+              <p className="absolute bottom-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{dealerHandCount}</p>
             </div>
             {/* stats */}
             <div className="w-[20%] h-full flex items-center justify-center text-xl">
@@ -267,26 +269,33 @@ export default function Home() {
         <div className="w-full h-[45%] flex items-center justify-center">
           <div className="w-[85%] h-[85%] flex items-center justify-between">
             {/* bet selection */}
-            <div className="w-[20%] h-full flex flex-col items-center justify-around">
-              <div className="w-16 h-16 bg-blvck rounded-full flex items-center justify-center text-whvte font-bold cursor-pointer"
-                onClick={() => takeBid(10, "add")}>
-                $10
+            <div className="w-full sm:w-1/5 h-full flex flex-col items-center justify-around p-4">
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(50, "add")}>
+                <span>50</span>
               </div>
-              <div className="w-16 h-16 bg-blvck rounded-full flex items-center justify-center text-whvte font-bold cursor-pointer"
-                onClick={() => takeBid(50, "add")}>
-                $50
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(100, "add")}>
+                <span>100</span>
               </div>
-              <div className="w-16 h-16 bg-blvck rounded-full flex items-center justify-center text-whvte font-bold cursor-pointer"
-                onClick={() => takeBid(100, "add")}>
-                $100
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(200, "add")}>
+                <span>200</span>
               </div>
-              <div className="w-16 h-16 bg-blvck rounded-full flex items-center justify-center text-whvte font-bold cursor-pointer"
-                onClick={() => takeBid(500, "add")}>
-                $500
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(500, "add")}>
+                <span>500</span>
+              </div>
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(1000, "add")}>
+                <span>1000</span>
+              </div>
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(total, "add")}>
+                <span>All</span>
+              </div>
+              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(bet, "rem")}>
+                <span>Undo</span>
               </div>
             </div>
+
             {/* players hand */}
-            <div className="w-[60%] h-full mx-2 flex items-center justify-center">
+            <div className="relative w-[60%] h-full mx-2 flex items-center justify-center bg-emerald-950/80 rounded-[3rem] overflow-hidden">
+              <p className="absolute top-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{playerHandCount}</p>
               <CardHand cards={playerHand} />
             </div>
             {/* player actions */}

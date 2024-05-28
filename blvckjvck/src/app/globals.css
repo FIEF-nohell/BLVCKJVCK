@@ -31,3 +31,35 @@ body {
     text-wrap: balance;
   }
 }
+/* 
+.chip{
+  background-color: #691916;
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  border: 6px dashed #c9d0d1;
+  transition: all 1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9d0d1;
+  font-size: 20px;
+  margin: 0px 8px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.chip span {
+  border: 4px dashed #c9d0d1;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  text-align: center;
+  line-height:70px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+} */

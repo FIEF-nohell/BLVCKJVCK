@@ -13,17 +13,17 @@ export default function Actions({ playerHandCount, dealerHandCount, hit, stand, 
     return (
         <div>
             <div className="flex justify-between w-full">
-                <p className="font-bold text-tvxt text-[2.25rem]">{playerHandCount}</p>
-                <p className="font-bold text-rvd text-[2.25rem] text-right">{dealerHandCount}</p>
+                <p className="font-bold text-emerald-800 text-[2.25rem]">{playerHandCount}</p>
+                <p className="font-bold text-rvd-bright text-[2.25rem] text-right">{dealerHandCount}</p>
             </div>
             <div
-                className="hover:cursor-pointer mt-8 mb-4 px-8 py-1 font-semibold text-center text-blvck/80 rounded-full border-2 border-svcond/70"
+                className="hover:cursor-pointer mt-8 mb-4 px-8 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2 transform transition-transform duration-300 ease-in-out hover:scale-110"
                 onClick={hit}
             >
                 {buttonText}
             </div>
             <div
-                className="hover:cursor-pointer mt-8 mb-4 px-8 py-1 font-semibold text-center text-blvck/80 rounded-full border-2 border-svcond/70"
+                className="hover:cursor-pointer mt-8 mb-4 px-8 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2 transform transition-transform duration-300 ease-in-out hover:scale-110"
                 onClick={stand}
             >
                 Stand
