@@ -35,7 +35,7 @@ export default function Chips({ takeBid, total, bet }: ChipsProps) {
 
             {/* DESKTOP VIEW */}
             <div className="hidden lg:flex flex-col">
-                <div className="cursor-pointer bg-rvd text-blvck rounded-full w-12 h-12 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(50, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-12 h-12 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(50, "add")}>
                     <span>50</span>
                 </div>
                 <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-12 h-12 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(100, "add")}>

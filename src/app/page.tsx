@@ -258,7 +258,52 @@ export default function Home() {
   return (
     <main className="h-screen flex items-center justify-center bg-blvck text-tvxt select-none">
       <RoundResult showResult={showResult} winner={winner}></RoundResult>
-      <div className="bg-blvck w-[80%] h-[85%] m-0 flex flex-col">
+
+      {/* MOBILE VERSION */}
+      <div className="lg:hidden bg-blvck w-full h-full flex flex-col m-0">
+        {/* Title and Stats */}
+        <div className="w-full h-[20%] flex flex-col items-center py-4">
+          <p className="font-bold text-[1.5rem] text-center text-tvxt" onClick={resetGame}>BLVCKJVCK</p>
+          <div className="mt-2">
+            <p className="font-semibold">Bet: <span className="text-tvxt font-bold">${bet}</span></p>
+          </div>
+          <div className="mt-2">
+            <Stats wins={wins} losses={losses} total={total} />
+          </div>
+        </div>
+
+        {/* Upper Half of the Desk */}
+        <div className="w-[85%] h-[70%] mx-auto flex flex-col">
+          {/* Dealer's Hand */}
+          <div className="relative w-full h-[43%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
+            <CardHand cards={dealerHand} />
+          </div>
+          {/* Chips */}
+          <div className="w-full h-auto flex flex-col items-center justify-center">
+            <Chips takeBid={takeBid} total={total} bet={bet} />
+          </div>
+          {/* Player's Hand */}
+          <div className="relative w-full h-[43%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
+            <CardHand cards={playerHand} />
+          </div>
+        </div>
+
+
+        {/* Actions */}
+        <div className="w-[85%] h-[10%] flex items-center justify-center text-xl">
+          {/* Player Actions */}
+          <Actions playerHandCount={playerHandCount} dealerHandCount={dealerHandCount} hit={hit} stand={stand} gameStep={gameStep} />
+        </div>
+
+        {/* Bottom Line */}
+        <div className="w-full h-[0%]"></div>
+      </div>
+
+
+
+
+      {/* DESKTOP VERSION */}
+      <div className="hidden lg:flex bg-blvck w-[80%] h-[85%] m-0 flex-col">
         {/* title line */}
         <div className="w-full h-[10%] rounded-t-[3rem] flex items-center justify-center">
           <p className="font-bold text-[2.5rem] text-center text-tvxt" onClick={resetGame}>BLVCKJVCK</p>
