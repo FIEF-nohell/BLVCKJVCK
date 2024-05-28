@@ -23,19 +23,25 @@ export default function Home() {
 
   useEffect(() => {
     updateCounters()
+    const dealerDrawLogic = async () => {
+      if (shouldDealerDraw(dealerHand, playerHand)) {
+        addCardToDealer(true)
+        await sleep(5000)
+      }
+      else setGameStep(3)
+    }
     if (gameStep == 1) {
       if (playerHandCount >= 21) {
         //DEBUG
         revealDealerCard()
-        setGameStep(2)
+        //setGameStep(2)
       }
     }
     if (gameStep == 2) {
-      if (shouldDealerDraw(dealerHand, playerHand)) addCardToDealer(true)
-      else setGameStep(3)
+      dealerDrawLogic()
     }
     if (gameStep == 3) {
-      checkForWin()
+      //checkForWin()
       //DEBUG
     }
   }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep, hiddenTick]);
@@ -122,7 +128,9 @@ export default function Home() {
     updateCounters()
   }
 
-  const addCardToDealer = (visible: boolean) => {
+  const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+  const addCardToDealer = async (visible: boolean) => {
     let dh = dealerHand
     dh.push(getRandomCard(visible))
     setDealerHand(dh)

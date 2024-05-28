@@ -15,8 +15,8 @@ interface CardHandProps {
 
 // Define motion variants for the sliding effect
 const cardVariants = {
-    hidden: { opacity: 0, y: 500 },
-    visible: { opacity: 1, y: 0 }
+    hidden: { y: 500 },
+    visible: { y: 0 }
 };
 
 // Card component with props typed
@@ -24,7 +24,7 @@ const Card: React.FC<CardData> = ({ suit, text, bgColor, revealed }) => (
     <>
         {revealed ? (
             <motion.div
-                className={`relative w-40 h-56 ${bgColor} text-white rounded-2xl flex flex-col justify-between p-2 m-1 transform transition-transform duration-300 ease-in-out hover:scale-105`}
+                className={`relative w-40 h-56 ${bgColor} text-tvxt rounded-2xl flex flex-col justify-between p-2 m-1 transform transition-transform duration-300 ease-in-out hover:scale-105`}
                 initial="hidden"
                 animate="visible"
                 variants={cardVariants}
@@ -36,6 +36,10 @@ const Card: React.FC<CardData> = ({ suit, text, bgColor, revealed }) => (
         ) : (
             <motion.div
                 className="relative w-40 h-56 bg-[#ffffff3e] rounded-2xl flex flex-col justify-between p-2 m-1 transform transition-transform duration-300 ease-in-out hover:scale-105"
+                initial="hidden"
+                animate="visible"
+                variants={cardVariants}
+                transition={{ duration: 0.25 }}
             />
         )}
     </>
