@@ -9,7 +9,7 @@ export interface RoundResultProps {
 
 export default function RoundResult({ showResult, winner }: RoundResultProps) {
     useEffect(() => {
-        if (showResult) {
+        if (showResult && winner == "Player Wins") {
             const jsConfetti = new JSConfetti();
             jsConfetti.addConfetti({
                 emojis: ['💸'],
