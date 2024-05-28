@@ -31,7 +31,7 @@ jobs:
           elif [ -f "${{ github.workspace }}/package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_ENV
             echo "command=ci" >> $GITHUB_ENV
-            echo "runner=npx --no-install" >> $GITHUB_ENV
+            echo "runner=npm" >> $GITHUB_ENV
           else
             echo "Unable to determine package manager"
             exit 1
@@ -58,10 +58,20 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json', 'yarn.lock') }}-
 
       - name: Install dependencies
-        run: ${{ env.runner }} ${{ env.command }}
+        run: |
+          if [ "${{ env.manager }}" = "yarn" ]; then
+            yarn install
+          else
+            npm ci
+          fi
 
       - name: Build with Next.js
-        run: ${{ env.runner }} next build
+        run: |
+          if [ "${{ env.manager }}" = "yarn" ]; then
+            yarn next build
+          else
+            npx next build
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
