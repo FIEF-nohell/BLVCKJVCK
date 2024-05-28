@@ -6,34 +6,80 @@ import CardHand, { CardData } from "./components/cardHand";
 
 export default function Home() {
   // Stats
-  const [bet, setBet] = useState(100);
-  const [total, setTotal] = useState(750);
+  const [bet, setBet] = useState(0);
+  const [total, setTotal] = useState(500);
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
 
   // Hands
   const [playerHandCount, setPlayerHandCount] = useState(0);
-  const [playerHand, SetPlayerHand] = useState<CardData[]>([]);
+  const [playerHand, setPlayerHand] = useState<CardData[]>([]);
   const [dealerHandCount, setDealerHandCount] = useState(0);
-  const [dealerHand, SetDealerHand] = useState<CardData[]>([]);
+  const [dealerHand, setDealerHand] = useState<CardData[]>([]);
 
   // Game
   const [gameStep, setGameStep] = useState(0);
+  const [hiddenTick, setHiddenTick] = useState(0);
 
   useEffect(() => {
     updateCounters()
+    if (gameStep == 1) {
+      if (playerHandCount >= 21) {
+        revealDealerCard()
+        setGameStep(2)
+      }
+    }
     if (gameStep == 2) {
       if (shouldDealerDraw(dealerHand, playerHand)) addCardToDealer(true)
       else setGameStep(3)
     }
-  }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep]);
+    if (gameStep == 3) {
+      checkForWin()
+    }
+  }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep, hiddenTick]);
+
+  const checkForWin = () => {
+    if (playerHandCount > 21 && dealerHandCount <= 21) {
+      dealerWins()
+    } else if (dealerHandCount > 21 && playerHandCount <= 21) {
+      playerWins()
+    } else if (playerHandCount > 21 && dealerHandCount > 21) {
+      draw()
+    } else if (playerHandCount <= 21 && dealerHandCount <= 21) {
+      if (playerHandCount > dealerHandCount) {
+        playerWins()
+      } else if (dealerHandCount > playerHandCount) {
+        dealerWins()
+      } else {
+        draw()
+      }
+    }
+    setGameStep(0)
+    setDealerHand([])
+    setPlayerHand([])
+    updateCounters()
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
+  }
+
+  const dealerWins = () => {
+    setBet(0)
+    setLosses(losses + 1)
+  }
+
+  const playerWins = () => {
+    setTotal(total + (bet * 2))
+    setWins(wins + 1)
+    setBet(0)
+  }
+
+  const draw = () => {
+    setTotal(total + bet)
+    setBet(0)
+  }
 
   const updateCounters = () => {
-    // Calculate player and dealer sums
     const playerSum = calculateHandSum(playerHand);
     const dealerSum = calculateHandSum(dealerHand);
-
-    // Update the state with the new sums
     setPlayerHandCount(playerSum);
     setDealerHandCount(dealerSum);
   };
@@ -59,37 +105,41 @@ export default function Home() {
   };
 
   const resetGame = () => {
-    setBet(100);
+    setBet(0);
     setTotal(500);
     setWins(0);
     setLosses(0);
+    setGameStep(0)
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   };
 
   const addCardToPlayer = (visible: boolean) => {
     let ph = playerHand
     ph.push(getRandomCard(visible))
-    SetPlayerHand(ph)
+    setPlayerHand(ph)
     updateCounters()
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   }
 
   const addCardToDealer = (visible: boolean) => {
     let dh = dealerHand
     dh.push(getRandomCard(visible))
-    SetDealerHand(dh)
+    setDealerHand(dh)
     updateCounters()
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   }
 
   const revealDealerCard = () => {
     let dh = dealerHand
     dh[0].revealed = true
-    SetDealerHand(dh)
+    setDealerHand(dh)
     updateCounters()
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   }
 
   const shouldDealerDraw = (dealerHand: CardData[], playerHand: CardData[]): boolean => {
     const dealerSum = calculateHandSum(dealerHand);
     const playerSum = calculateHandSum(playerHand);
-
     if (dealerSum < 17) {
       return true;
     }
@@ -135,7 +185,7 @@ export default function Home() {
       bgColor: bgColor,
       revealed: visible,
     };
-
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
     return card;
   };
 
@@ -151,6 +201,7 @@ export default function Home() {
       setTotal(total + bid);
       setBet(bet - bid);
     }
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
   };
 
   const hit = () => {
@@ -168,6 +219,7 @@ export default function Home() {
         addCardToPlayer(true)
         break
     }
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
     updateCounters()
   }
 
@@ -178,6 +230,7 @@ export default function Home() {
         setGameStep(2)
         break
     }
+    setHiddenTick(Math.random() * 100 * Math.random() * 100);
     updateCounters()
   }
 
