@@ -25,13 +25,13 @@ jobs:
         id: detect-package-manager
         run: |
           if [ -f "${{ github.workspace }}/blvckjvck/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
+            echo "manager=yarn" >> $GITHUB_ENV
+            echo "command=install" >> $GITHUB_ENV
+            echo "runner=yarn" >> $GITHUB_ENV
           elif [ -f "${{ github.workspace }}/blvckjvck/package-lock.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            echo "manager=npm" >> $GITHUB_ENV
+            echo "command=ci" >> $GITHUB_ENV
+            echo "runner=npx --no-install" >> $GITHUB_ENV
           else
             echo "Unable to determine package manager"
             exit 1
@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: ${{ env.manager }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -58,10 +58,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('blvckjvck/package-lock.json', 'blvckjvck/yarn.lock') }}-
 
       - name: Install dependencies
-        run: cd blvckjvck && ${{ steps.detect-package-manager.outputs.runner }} ${{ steps.detect-package-manager.outputs.command }}
+        run: cd blvckjvck && ${{ env.runner }} ${{ env.command }}
 
       - name: Build with Next.js
-        run: cd blvckjvck && ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: cd blvckjvck && ${{ env.runner }} next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
