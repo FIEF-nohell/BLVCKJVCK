@@ -28,9 +28,9 @@ export default function Home() {
   useEffect(() => {
     updateCounters()
     if (gameStep == 1) {
-      if (playerHandCount >= 21) {
-        revealDealerCard()
-        setGameStep(2)
+      if (playerHandCount > 21) {
+        setTimeout(() => { revealDealerCard() }, 750)
+        setTimeout(() => { setGameStep(2) }, 500)
       }
     }
     if (gameStep == 2) {
@@ -45,7 +45,16 @@ export default function Home() {
   }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep, hiddenTick]);
 
   const checkForWin = () => {
-    if (playerHandCount > 21 && dealerHandCount <= 21) {
+    if (playerHandCount == 999 && dealerHandCount < 999) {
+      playerBJ()
+      setWinner("Player Wins")
+    } else if (playerHandCount == 999 && dealerHandCount == 999) {
+      draw()
+      setWinner("Draw")
+    } else if (playerHandCount < 999 && dealerHandCount == 999) {
+      dealerWins()
+      setWinner("Dealer Wins")
+    } else if (playerHandCount > 21 && dealerHandCount <= 21) {
       dealerWins()
       setWinner("Dealer Wins")
     } else if (dealerHandCount > 21 && playerHandCount <= 21) {
@@ -90,6 +99,12 @@ export default function Home() {
     setBet(0)
   }
 
+  const playerBJ = () => {
+    setTotal(total + (bet * 2.5))
+    setWins(wins + 1)
+    setBet(0)
+  }
+
   const draw = () => {
     setTotal(total + bet)
     setBet(0)
@@ -105,8 +120,18 @@ export default function Home() {
   const calculateHandSum = (hand: CardData[]) => {
     let sum = 0;
     let aceCount = 0;
+    // Check for blackjack condition
+    if (hand.length === 2) {
+      const cardTexts = hand.map(card => card.text);
+      const cardValues = hand.map(card => card.value);
+
+      if (cardTexts.includes('A') && cardValues.includes(10)) {
+        return 999;
+      }
+    }
+
     hand.forEach(card => {
-      if (card.revealed != false) {
+      if (card.revealed !== false) {
         if (card.text === 'A') {
           aceCount += 1;
           sum += 11;
@@ -115,10 +140,12 @@ export default function Home() {
         }
       }
     });
+
     while (sum > 21 && aceCount > 0) {
       sum -= 10;
       aceCount -= 1;
     }
+
     return sum;
   };
 
@@ -166,6 +193,9 @@ export default function Home() {
     }
     if (dealerSum >= 17 && dealerSum < 21 && dealerSum > playerSum) {
       return false;
+    }
+    if (dealerSum >= 17 && dealerSum < 21 && dealerSum < playerSum) {
+      return true;
     }
     if (dealerSum === 17) {
       return Math.random() < 0.05;

@@ -9,6 +9,9 @@ interface ActionsProps {
 
 export default function Actions({ playerHandCount, dealerHandCount, hit, stand, gameStep }: ActionsProps) {
     const buttonText = gameStep === 0 || gameStep === 3 ? 'Start' : 'Hit';
+    // if the player or the dealer hand count is 999 still display it as 21
+    const playerHandCountText = playerHandCount === 999 ? 21 : playerHandCount
+    const dealerHandCountText = dealerHandCount === 999 ? 21 : dealerHandCount
 
     return (
         <>
@@ -22,10 +25,10 @@ export default function Actions({ playerHandCount, dealerHandCount, hit, stand, 
                 </div>
                 <div className="flex-grow flex items-center justify-center">
                     <p className="font-bold text-emerald-800 text-[2.25rem] mx-2">
-                        {playerHandCount}
+                        {playerHandCountText}
                     </p>
                     <p className="font-bold text-rvd-bright text-[2.25rem] mx-2 text-right">
-                        {dealerHandCount}
+                        {dealerHandCountText}
                     </p>
                 </div>
                 <div
