@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Stats from "./components/stats";
 import Actions from "./components/actions";
 import CardHand, { CardData } from "./components/cardHand";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
   // Stats
@@ -10,6 +11,8 @@ export default function Home() {
   const [total, setTotal] = useState(500);
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [winner, setWinner] = useState("");
 
   // Hands
   const [playerHandCount, setPlayerHandCount] = useState(0);
@@ -37,32 +40,38 @@ export default function Home() {
       else setGameStep(3)
     }
     if (gameStep == 3) {
-      checkForWin()
-      //DEBUG
+      setTimeout(() => { checkForWin() }, 1000)
     }
   }, [playerHand, playerHand.length, dealerHand, dealerHand.length, gameStep, hiddenTick]);
 
   const checkForWin = () => {
     if (playerHandCount > 21 && dealerHandCount <= 21) {
       dealerWins()
+      setWinner("Dealer Wins")
     } else if (dealerHandCount > 21 && playerHandCount <= 21) {
       playerWins()
+      setWinner("Player Wins")
     } else if (playerHandCount > 21 && dealerHandCount > 21) {
       draw()
+      setWinner("Draw")
     } else if (playerHandCount <= 21 && dealerHandCount <= 21) {
       if (playerHandCount > dealerHandCount) {
         playerWins()
+        setWinner("Player Wins")
       } else if (dealerHandCount > playerHandCount) {
         dealerWins()
+        setWinner("Dealer Wins")
       } else {
         draw()
+        setWinner("Draw")
       }
     }
-    setTimeout(() => { resetAfterRound() }, 5000)
-
+    setShowResult(true)
+    setTimeout(() => { resetAfterRound() }, 1500)
   }
 
   const resetAfterRound = () => {
+    setShowResult(false)
     setGameStep(0)
     setDealerHand([])
     setPlayerHand([])
@@ -114,7 +123,7 @@ export default function Home() {
   };
 
   const resetGame = () => {
-    setBet(0);
+    setBet(50);
     setTotal(500);
     setWins(0);
     setLosses(0);
@@ -128,8 +137,6 @@ export default function Home() {
     setPlayerHand(ph)
     updateCounters()
   }
-
-  const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
   const addCardToDealer = async (visible: boolean) => {
     let dh = dealerHand
@@ -246,8 +253,20 @@ export default function Home() {
 
   return (
     <main className="h-screen flex items-center justify-center bg-blvck text-tvxt select-none">
+      <AnimatePresence>
+        {showResult ?
+          <>
+            <motion.p className="z-50 absolute text-[4rem] font-extrabold"
+              initial={{ x: -2000 }}
+              animate={{ x: 0 }}
+              exit={{ x: -2000 }}>{winner}</motion.p>
+            <motion.div className="z-40 absolute w-full h-full bg-blvck/70"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}></motion.div>
+          </> : null}
+      </AnimatePresence>
       <div className="bg-blvck w-[80%] h-[85%] m-0 flex flex-col">
-
         {/* title line */}
         <div className="w-full h-[10%] rounded-t-[3rem] flex items-center justify-center">
           <p className="font-bold text-[2.5rem] text-center text-tvxt" onClick={resetGame}>BLVCKJVCK</p>
@@ -257,7 +276,7 @@ export default function Home() {
         <div className="w-full h-[45%] flex items-center justify-center">
           <div className="w-[85%] h-[85%] flex items-center justify-between">
             {/* current bet */}
-            <div className="w-[20%] h-full flex items-center justify-center text-xl">
+            <div className="w-[20%] h-full flex items-center justify-center text-2xl">
               <div>
                 <p className="font-semibold">Bet: <span className="text-tvxt font-bold">${bet}</span></p>
               </div>
@@ -268,7 +287,7 @@ export default function Home() {
               <p className="absolute bottom-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{dealerHandCount}</p>
             </div>
             {/* stats */}
-            <div className="w-[20%] h-full flex items-center justify-center text-xl">
+            <div className="w-[20%] h-full flex items-center justify-center text-2xl">
               <Stats wins={wins} losses={losses} total={total}></Stats>
             </div>
           </div>
