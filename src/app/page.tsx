@@ -164,6 +164,9 @@ export default function Home() {
     if (dealerSum < 17) {
       return true;
     }
+    if (dealerSum >= 17 && dealerSum < 21 && dealerSum > playerSum) {
+      return false;
+    }
     if (dealerSum === 17) {
       return Math.random() < 0.05;
     }
