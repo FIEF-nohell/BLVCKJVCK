@@ -8,26 +8,26 @@ export default function Chips({ takeBid, total, bet }: ChipsProps) {
     return (
         <>
             {/* MOBILE VIEW */}
-            <div className="flex lg:hidden w-full justify-between text-[0.75rem] m-[2vh]">
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(50, "add")}>
+            <div className="flex lg:hidden w-full justify-between text-[0.75rem] my-2">
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(50, "add")}>
                     <span>50</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(100, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(100, "add")}>
                     <span>100</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(200, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(200, "add")}>
                     <span>200</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(500, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(500, "add")}>
                     <span>500</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(1000, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(1000, "add")}>
                     <span>1000</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(total, "add")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(total, "add")}>
                     <span>All</span>
                 </div>
-                <div className="cursor-pointer bg-tvxt text-blvck rounded-full h-full aspect-square flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(bet, "rem")}>
+                <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg" onClick={() => takeBid(bet, "rem")}>
                     <span>Undo</span>
                 </div>
             </div>

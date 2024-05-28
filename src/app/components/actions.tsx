@@ -15,7 +15,7 @@ export default function Actions({ playerHandCount, dealerHandCount, hit, stand, 
             {/* MOBILE VIEW */}
             <div className="flex lg:hidden items-center justify-between w-full">
                 <div
-                    className="hover:cursor-pointer px-4 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2"
+                    className="hover:cursor-pointer px-6 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2"
                     onClick={hit}
                 >
                     {buttonText}
@@ -29,7 +29,7 @@ export default function Actions({ playerHandCount, dealerHandCount, hit, stand, 
                     </p>
                 </div>
                 <div
-                    className="hover:cursor-pointer px-4 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2"
+                    className="hover:cursor-pointer px-6 py-1 font-semibold text-center bg-tvxt text-blvck rounded-full border-2"
                     onClick={stand}
                 >
                     Stand

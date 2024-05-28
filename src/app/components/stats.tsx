@@ -10,9 +10,7 @@ export default function Stats({ wins, losses, total }: StatsProps) {
             {/* MOBILE VIEW */}
             <div className="block lg:hidden text-md text-tvxt">
                 <div className="flex justify-between">
-                    <p className="font-semibold">Wins: {wins}</p>
-                    <p className="font-semibold">Losses: {losses}</p>
-                    <p className="font-semibold">Total: ${total}</p>
+                    <p className="font-semibold">Wins: {wins} - Losses: {losses} - Total: ${total}</p>
                 </div>
             </div>
 

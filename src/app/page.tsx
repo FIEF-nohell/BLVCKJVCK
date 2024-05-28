@@ -264,7 +264,7 @@ export default function Home() {
         {/* Title and Stats */}
         <div className="w-full h-[20%] flex flex-col items-center py-4">
           <p className="font-bold text-[1.5rem] text-center text-tvxt" onClick={resetGame}>BLVCKJVCK</p>
-          <div className="mt-2">
+          <div className="mt-2 text-lg">
             <p className="font-semibold">Bet: <span className="text-tvxt font-bold">${bet}</span></p>
           </div>
           <div className="mt-2">
@@ -273,24 +273,24 @@ export default function Home() {
         </div>
 
         {/* Upper Half of the Desk */}
-        <div className="w-[85%] h-[70%] mx-auto flex flex-col">
+        <div className="w-[85%] h-[60%] mx-auto flex flex-col">
           {/* Dealer's Hand */}
-          <div className="relative w-full h-[43%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
+          <div className="relative w-full h-[49%] mb-[2%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
             <CardHand cards={dealerHand} />
           </div>
-          {/* Chips */}
-          <div className="w-full h-auto flex flex-col items-center justify-center">
-            <Chips takeBid={takeBid} total={total} bet={bet} />
-          </div>
           {/* Player's Hand */}
-          <div className="relative w-full h-[43%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
+          <div className="relative w-full h-[49%] bg-emerald-950/80 rounded-[1.25rem] overflow-hidden">
             <CardHand cards={playerHand} />
           </div>
         </div>
 
 
-        {/* Actions */}
-        <div className="w-[85%] h-[10%] flex items-center justify-center text-xl">
+        {/* Actions and Chips */}
+        <div className="w-[85%] h-[20%] mx-auto">
+          {/* Chips */}
+          <div className="w-full h-auto flex flex-col items-center justify-center">
+            <Chips takeBid={takeBid} total={total} bet={bet} />
+          </div>
           {/* Player Actions */}
           <Actions playerHandCount={playerHandCount} dealerHandCount={dealerHandCount} hit={hit} stand={stand} gameStep={gameStep} />
         </div>
