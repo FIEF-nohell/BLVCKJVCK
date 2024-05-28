@@ -28,12 +28,10 @@ jobs:
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
           elif [ -f "${{ github.workspace }}/blvckjvck/package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
           else
             echo "Unable to determine package manager"
             exit 1
@@ -54,13 +52,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/blvckjvck/package-lock.json', '**/blvckjvck/yarn.lock') }}-${{ hashFiles('**/blvckjvck/*.js', '**/blvckjvck/*.jsx', '**/blvckjvck/*.ts', '**/blvckjvck/*.tsx') }}
+            blvckjvck/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('blvckjvck/package-lock.json', 'blvckjvck/yarn.lock') }}-${{ hashFiles('blvckjvck/src/**/*.js', 'blvckjvck/src/**/*.jsx', 'blvckjvck/src/**/*.ts', 'blvckjvck/src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/blvckjvck/package-lock.json', '**/blvckjvck/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('blvckjvck/package-lock.json', 'blvckjvck/yarn.lock') }}-
 
       - name: Install dependencies
-        run: cd blvckjvck && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: cd blvckjvck && ${{ steps.detect-package-manager.outputs.runner }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build with Next.js
         run: cd blvckjvck && ${{ steps.detect-package-manager.outputs.runner }} next build
