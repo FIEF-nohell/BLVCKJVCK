@@ -6,10 +6,22 @@ interface StatsProps {
 }
 export default function Stats({ wins, losses, total }: StatsProps) {
     return (
-        <div>
-            <p className="font-semibold">Wins: <span className="text-tvxt font-bold">{wins}</span></p>
-            <p className="mt-4 mb-4 font-semibold">Losses: <span className="text-tvxt font-bold">{losses}</span></p>
-            <p className="font-semibold">Total: <span className="text-tvxt font-bold">${total}</span></p>
-        </div>
+        <>
+            {/* MOBILE VIEW */}
+            <div className="block lg:hidden text-md text-tvxt">
+                <div className="flex justify-between">
+                    <p className="font-semibold">Wins: {wins}</p>
+                    <p className="font-semibold">Losses: {losses}</p>
+                    <p className="font-semibold">Total: ${total}</p>
+                </div>
+            </div>
+
+            {/* DESKTOP VIEW */}
+            <div className="hidden lg:block text-md text-tvxt">
+                <p className="font-semibold">Wins: {wins}</p>
+                <p className="mt-4 mb-4 font-semibold">Losses: {losses}</p>
+                <p className="font-semibold">Total: ${total}</p>
+            </div>
+        </>
     )
 }

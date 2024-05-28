@@ -1,9 +1,10 @@
 "use client"
-import { useEffect, useState } from "react";
-import Stats from "./components/stats";
-import Actions from "./components/actions";
 import CardHand, { CardData } from "./components/cardHand";
-import { AnimatePresence, motion } from "framer-motion";
+import RoundResult from "./components/roundResult";
+import { useEffect, useState } from "react";
+import Actions from "./components/actions";
+import Chips from "./components/chips";
+import Stats from "./components/stats";
 
 export default function Home() {
   // Stats
@@ -28,7 +29,6 @@ export default function Home() {
     updateCounters()
     if (gameStep == 1) {
       if (playerHandCount >= 21) {
-        //DEBUG
         revealDealerCard()
         setGameStep(2)
       }
@@ -257,19 +257,7 @@ export default function Home() {
 
   return (
     <main className="h-screen flex items-center justify-center bg-blvck text-tvxt select-none">
-      <AnimatePresence>
-        {showResult ?
-          <>
-            <motion.p className="z-50 absolute text-[4rem] font-extrabold"
-              initial={{ x: -2000 }}
-              animate={{ x: 0 }}
-              exit={{ x: -2000 }}>{winner}</motion.p>
-            <motion.div className="z-40 absolute w-full h-full bg-blvck/70"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}></motion.div>
-          </> : null}
-      </AnimatePresence>
+      <RoundResult showResult={showResult} winner={winner}></RoundResult>
       <div className="bg-blvck w-[80%] h-[85%] m-0 flex flex-col">
         {/* title line */}
         <div className="w-full h-[10%] rounded-t-[3rem] flex items-center justify-center">
@@ -302,29 +290,8 @@ export default function Home() {
           <div className="w-[85%] h-[85%] flex items-center justify-between">
             {/* bet selection */}
             <div className="w-full sm:w-1/5 h-full flex flex-col items-center justify-around p-4">
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(50, "add")}>
-                <span>50</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(100, "add")}>
-                <span>100</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(200, "add")}>
-                <span>200</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(500, "add")}>
-                <span>500</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(1000, "add")}>
-                <span>1000</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(total, "add")}>
-                <span>All</span>
-              </div>
-              <div className="cursor-pointer bg-tvxt text-blvck rounded-full w-16 h-16 flex items-center justify-center mb-4 text-lg font-bold shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-110" onClick={() => takeBid(bet, "rem")}>
-                <span>Undo</span>
-              </div>
+              <Chips takeBid={takeBid} total={total} bet={bet}></Chips>
             </div>
-
             {/* players hand */}
             <div className="relative w-[60%] h-full mx-2 flex items-center justify-center bg-emerald-950/80 rounded-[3rem] overflow-hidden">
               <p className="absolute top-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{playerHandCount}</p>
