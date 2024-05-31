@@ -354,7 +354,7 @@ export default function Home() {
             {/* dealers hand */}
             <div className="relative w-[60%] h-full mx-2 bg-emerald-950/80 rounded-[3rem] overflow-hidden">
               <CardHand cards={dealerHand} />
-              <p className="absolute bottom-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{dealerHandCount}</p>
+              {/* <p className="absolute bottom-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{dealerHandCount}</p> */}
             </div>
             {/* stats */}
             <div className="w-[20%] h-full flex items-center justify-center text-2xl">
@@ -372,7 +372,7 @@ export default function Home() {
             </div>
             {/* players hand */}
             <div className="relative w-[60%] h-full mx-2 flex items-center justify-center bg-emerald-950/80 rounded-[3rem] overflow-hidden">
-              <p className="absolute top-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{playerHandCount}</p>
+              {/* <p className="absolute top-2 left-1/2 transform -translate-x-1/2 font-bold text-tvxt/20 text-[2.25rem]">{playerHandCount}</p> */}
               <CardHand cards={playerHand} />
             </div>
             {/* player actions */}
